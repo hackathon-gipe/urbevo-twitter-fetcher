@@ -1,0 +1,29 @@
+service: urbevo-twitter-fetcher
+frameworkVersion: '3'
+
+custom: 
+  layerConfig:
+    packager: 'npm'
+  webpack:
+    webpackConfig: ./webpack.config.js
+    packager: 'npm'
+    packagerOptions:
+      noFrozenLockfile: true
+
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-south-2
+
+functions:
+  twitter-fetcher-lambda:
+    handler: src/eventhandlers/eventbridge-handler.handler
+    #events:
+      # Invoke Lambda function every day at 12:00
+      #- schedule: rate(1 day)
